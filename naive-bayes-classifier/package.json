@@ -1,0 +1,15 @@
+{
+  "name": "naive-bayes-classifier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "msahil432",
+  "license": "ISC",
+  "dependencies": {
+    "bayes": "0.0.7",
+    "express": "^4.16.4"
+  }
+}

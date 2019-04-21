@@ -30,7 +30,7 @@ st=POS_tag(_path_to_model,_path_to_jar)
 # worksheet.cell(row=0,11,'Naive Bayes Prediction')
 # wk.close()
 
-filename = 'dataset-r0.xlsx'
+filename = 'dataset-r1.xlsx'
 wk = openpyxl.Workbook()
 worksheet = wk.get_sheet_by_name('Sheet')
 worksheet.cell(row=1,column=1).value = 'Original Message'
@@ -51,6 +51,10 @@ threshhold=0.4
 with open('smsdata.txt','r') as f:
     for sms in f:
         l=l+1
+        if(l<4000):
+            continue
+        if(l>9000):
+            break
         # wk = openpyxl.load_workbook(filename) 
         # worksheet = wk.get_sheet_by_name('Sheet')
         worksheet.cell(row=l,column=1).value =sms.decode('utf-8')
@@ -87,7 +91,7 @@ with open('smsdata.txt','r') as f:
             upper_chars=sum(1 for c in sms if c.isupper())
             worksheet.cell(row=l,column=5).value=upper_chars
             
-            upper_case_score=(upper_chars/float(length_sms))
+            upper_case_score=(upper_chars/float(length_sms))*0.2
             worksheet.cell(row=l,column=6).value=str(upper_case_score)
             spam_score=spam_score+upper_case_score
             
@@ -99,7 +103,7 @@ with open('smsdata.txt','r') as f:
             worksheet.cell(row=l,column=7).value=cleaned.decode('utf-8')
             
             cleaned_sms_len=len(cleaned)-cleaned.count(' ')
-            cleaned_sms_score=(1-((length_sms-cleaned_sms_len)/float(length_sms)))
+            cleaned_sms_score=(1-((length_sms-cleaned_sms_len)/float(length_sms)))*0.7
             
             worksheet.cell(row=l,column=8).value=cleaned_sms_len
             
@@ -118,4 +122,4 @@ with open('smsdata.txt','r') as f:
             # j = json.loads(r.text)
             # worksheet.cell(row=l,column=12).value=j['text']['cat']
 
-wk.save(filename)
+        wk.save(filename)
